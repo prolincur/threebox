@@ -375,6 +375,7 @@ Threebox.prototype = {
 		this.enableSelectingFeatures = this.options.enableSelectingFeatures || false;
 		this.enableSelectingObjects = this.options.enableSelectingObjects || false;
 		this.enableDraggingObjects = this.options.enableDraggingObjects || false;
+		this.enableDraggingObjectsCustom = this.options.enableDraggingObjectsCustom || false;
 		this.enableRotatingObjects = this.options.enableRotatingObjects || false;
 		this.enableTooltips = this.options.enableTooltips || false;
 		this.multiLayer = this.options.multiLayer || false;
@@ -618,7 +619,7 @@ Threebox.prototype = {
 
 				//check if being moved
 				if (e.originalEvent.shiftKey && this.draggedObject) {
-					if (!map.tb.enableDraggingObjects || !map.tb.enableDraggingObjectsCustom) return;
+					if (!map.tb.enableDraggingObjects && !map.tb.enableDraggingObjectsCustom) return;
 
 					draggedAction = 'translate';
 					// Set a UI indicator for dragging.
@@ -640,7 +641,7 @@ Threebox.prototype = {
 
 				//check if being moved on altitude
 				if (e.originalEvent.ctrlKey && this.draggedObject) {
-					if (!map.tb.enableDraggingObjects || !map.tb.enableDraggingObjectsCustom) return;
+					if (!map.tb.enableDraggingObjects && !map.tb.enableDraggingObjectsCustom) return;
 					draggedAction = 'altitude';
 					// Set a UI indicator for dragging.
 					this.getCanvasContainer().style.cursor = 'move';
@@ -719,7 +720,7 @@ Threebox.prototype = {
 
 				// Continue the rest of the function shiftkey or altkey are pressed, and if object is selected
 				if (!((e.originalEvent.shiftKey || e.originalEvent.altKey || e.originalEvent.ctrlKey) && e.originalEvent.button === 0 && this.selectedObject)) return;
-				if (!map.tb.enableDraggingObjects && !map.tb.enableRotatingObjects) return;
+				if (!map.tb.enableDraggingObjects && !map.tb.enableRotatingObjects && !map.tb.enableDraggingObjectsCustom) return;
 
 				e.preventDefault();
 
@@ -1469,6 +1470,7 @@ var defaultOptions = {
 	enableSelectingFeatures: false,
 	enableSelectingObjects: false,
 	enableDraggingObjects: false,
+	enableDraggingObjectsCustom: false,
 	enableRotatingObjects: false,
 	enableTooltips: false,
 	multiLayer: false,

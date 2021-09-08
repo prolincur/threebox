@@ -349,7 +349,7 @@ Threebox.prototype = {
 
 				//check if being moved
 				if (e.originalEvent.shiftKey && this.draggedObject) {
-					if (!map.tb.enableDraggingObjects || !map.tb.enableDraggingObjectsCustom) return;
+					if (!map.tb.enableDraggingObjects && !map.tb.enableDraggingObjectsCustom) return;
 
 					draggedAction = 'translate';
 					// Set a UI indicator for dragging.
@@ -371,7 +371,7 @@ Threebox.prototype = {
 
 				//check if being moved on altitude
 				if (e.originalEvent.ctrlKey && this.draggedObject) {
-					if (!map.tb.enableDraggingObjects || !map.tb.enableDraggingObjectsCustom) return;
+					if (!map.tb.enableDraggingObjects && !map.tb.enableDraggingObjectsCustom) return;
 					draggedAction = 'altitude';
 					// Set a UI indicator for dragging.
 					this.getCanvasContainer().style.cursor = 'move';
