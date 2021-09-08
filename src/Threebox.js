@@ -105,6 +105,7 @@ Threebox.prototype = {
 		this.enableSelectingFeatures = this.options.enableSelectingFeatures || false;
 		this.enableSelectingObjects = this.options.enableSelectingObjects || false;
 		this.enableDraggingObjects = this.options.enableDraggingObjects || false;
+		this.enableDraggingObjectsCustom = this.options.enableDraggingObjectsCustom || false;
 		this.enableRotatingObjects = this.options.enableRotatingObjects || false;
 		this.enableTooltips = this.options.enableTooltips || false;
 		this.multiLayer = this.options.multiLayer || false;
@@ -348,7 +349,7 @@ Threebox.prototype = {
 
 				//check if being moved
 				if (e.originalEvent.shiftKey && this.draggedObject) {
-					if (!map.tb.enableDraggingObjects) return;
+					if (!map.tb.enableDraggingObjects || !map.tb.enableDraggingObjectsCustom) return;
 
 					draggedAction = 'translate';
 					// Set a UI indicator for dragging.
@@ -356,22 +357,34 @@ Threebox.prototype = {
 					// Capture the first xy coordinates, height must be the same to move on the same plane
 					let coords = e.lngLat;
 					let options = [Number((coords.lng + lngDiff).toFixed(this.tb.gridStep)), Number((coords.lat + latDiff).toFixed(this.tb.gridStep)), this.draggedObject.modelHeight];
-					this.draggedObject.setCoords(options);
-					this.draggedObject.addHelp("lng: " + options[0] + "&#176;, lat: " + options[1] + "&#176;");
+
+					// Fire event for custom Dragging
+					if (map.tb.enableDraggingObjectsCustom) {
+						this.draggedObject.dispatchEvent({ type: 'ObjectDraggingCustom', detail: { draggedObject: this.draggedObject, draggedAction: draggedAction, 
+							initialCoords: [coords.lng, coords.lat, this.draggedObject.modelHeight], finalCoords: options } });
+					} else {
+						this.draggedObject.setCoords(options);
+						this.draggedObject.addHelp("lng: " + options[0] + "&#176;, lat: " + options[1] + "&#176;");
+					}
 					return;
 				}
 
 				//check if being moved on altitude
 				if (e.originalEvent.ctrlKey && this.draggedObject) {
-					if (!map.tb.enableDraggingObjects) return;
+					if (!map.tb.enableDraggingObjects || !map.tb.enableDraggingObjectsCustom) return;
 					draggedAction = 'altitude';
 					// Set a UI indicator for dragging.
 					this.getCanvasContainer().style.cursor = 'move';
 					// Capture the first xy coordinates, height must be the same to move on the same plane
 					let now = (e.point.y * this.tb.altitudeStep);
 					let options = [this.draggedObject.coordinates[0], this.draggedObject.coordinates[1], Number((- now - altDiff).toFixed(this.tb.gridStep))];
-					this.draggedObject.setCoords(options);
-					this.draggedObject.addHelp("alt: " + options[2] + "m");
+					if (map.tb.enableDraggingObjectsCustom) {
+						this.draggedObject.dispatchEvent({ type: 'ObjectDraggingCustom', detail: { draggedObject: this.draggedObject, draggedAction: draggedAction, 
+							initialCoords: [this.draggedObject.coordinates[0], this.draggedObject.coordinates[1], -now], finalCoords: options } });
+					} else {
+						this.draggedObject.setCoords(options);
+						this.draggedObject.addHelp("alt: " + options[2] + "m");
+					}
 					return;
 				}
 
@@ -437,7 +450,7 @@ Threebox.prototype = {
 
 				// Continue the rest of the function shiftkey or altkey are pressed, and if object is selected
 				if (!((e.originalEvent.shiftKey || e.originalEvent.altKey || e.originalEvent.ctrlKey) && e.originalEvent.button === 0 && this.selectedObject)) return;
-				if (!map.tb.enableDraggingObjects && !map.tb.enableRotatingObjects) return;
+				if (!map.tb.enableDraggingObjects && !map.tb.enableRotatingObjects && !map.tb.enableDraggingObjectsCustom) return;
 
 				e.preventDefault();
 
@@ -1187,6 +1200,7 @@ var defaultOptions = {
 	enableSelectingFeatures: false,
 	enableSelectingObjects: false,
 	enableDraggingObjects: false,
+	enableDraggingObjectsCustom: false,
 	enableRotatingObjects: false,
 	enableTooltips: false,
 	multiLayer: false,
