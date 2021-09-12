@@ -966,17 +966,19 @@ Objects.prototype = {
 			if (mapboxStyle) {
 				let divContent = document.createElement('div');
 				divContent.className = 'mapboxgl-popup-content';
-				let strong = document.createElement('strong');
-				strong.innerHTML = tooltipText;
-				divContent.appendChild(strong);
+				//let strong = document.createElement('strong');
+				//strong.innerHTML = tooltipText;
+				//divContent.appendChild(strong);
+				divContent.innerHTML = tooltipText;
 				let tip = document.createElement('div');
 				tip.className = 'mapboxgl-popup-tip';
 				let div = document.createElement('div');
-				div.className = 'marker mapboxgl-popup-anchor-bottom';
-				div.appendChild(tip);
+				div.className = 'mapboxgl-popup-anchor-bottom';
 				div.appendChild(divContent);
+				div.appendChild(tip);
+				divContent.style.transform =  'translate(-50%,0)';
 				divToolTip = document.createElement('div');
-				divToolTip.className += 'label3D';
+				divToolTip.className = 'mapboxgl-popup label3D';
 				divToolTip.appendChild(div);
 			}
 			else {
