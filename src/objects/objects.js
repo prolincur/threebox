@@ -674,7 +674,7 @@ Objects.prototype = {
 						// Dispatch new event ObjectOver
 						obj.dispatchEvent({ type: 'ObjectMouseOut', detail: obj });
 					}
-					if (obj.tooltip) obj.tooltip.visible = value || obj.selected;
+					if (obj.tooltip) obj.tooltip.visible = value;
 					_over = value;
 				}
 			})
