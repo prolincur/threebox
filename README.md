@@ -1,9 +1,10 @@
 # `Threebox`
 
+![npm](https://img.shields.io/npm/dt/threebox-plugin?style=social)
+![npm](https://img.shields.io/npm/dw/threebox-plugin?style=flat-square)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/jscastro76/threebox?style=flat-square)](https://github.com/jscastro76/threebox/releases/)
 [![NPM version](http://img.shields.io/npm/v/threebox-plugin.svg?style=flat-square)](https://www.npmjs.org/package/threebox-plugin)
 [![NPM license](http://img.shields.io/npm/l/threebox-plugin.svg?style=flat-square)](https://www.npmjs.org/package/threebox-plugin)
-![npm](https://img.shields.io/npm/dt/threebox-plugin?style=social)
 
 A **[*Three.js*](https://threejs.org/)** plugin for **[*Mapbox GL JS*](https://docs.mapbox.com/mapbox-gl-js/examples/)** and **[*Azure Maps*](https://azure.microsoft.com/en-us/services/azure-maps/)** using the [`CustomLayerInterface`](https://docs.mapbox.com/mapbox-gl-js/api/properties/#customlayerinterface) feature. Provides convenient methods to manage objects in lnglat coordinates, and to synchronize the map and scene cameras.
 <img alt="threebox" src="docs/gallery.jpg">
@@ -50,7 +51,7 @@ npm i threebox-plugin
 <br>
 
 Only in this fork, there is a list of new features implemented on top of the amazing work from [@peterqliu](https://github.com/peterqliu/threebox/):
-- Updated to **Three.js r127**.
+- Updated to [**Three.js r132**](https://github.com/mrdoob/three.js/releases/tag/r132).
 - Updated to **Mapbox-gl-js v2.2.0**.
 - Updated to **Azure Maps v2.0.31**.
 - [+20 examples](https://github.com/jscastro76/threebox/tree/master/examples) with all the new features.
@@ -99,7 +100,7 @@ All the [**Threebox Documentation**](/docs/Threebox.md) has been completely upda
 
 ## Compatibility/Dependencies
 
-- **Three.js r127**. (already bundled into the Threebox build). If desired, other versions can be swapped in and rebuilt [here](https://github.com/jscastro76/threebox/blob/master/src/three.js), though compatibility is not guaranteed.
+- [**Three.js 132**](https://github.com/mrdoob/three.js/releases/tag/r132). (already bundled into the Threebox build). If desired, other versions can be swapped in and rebuilt [here](https://github.com/jscastro76/threebox/blob/master/src/three.js), though compatibility is not guaranteed.
 - **Mapbox-gl-js v1.11.1. or v.2.0.1**. **Warning**: Despite v1.11.1 still supported, if used, some features from mapbox v.2.0.1 won't be obviously available such as sky layers. 
 - **Azure Maps v2.0.31.**
 
@@ -119,8 +120,13 @@ npm install threebox-plugin
 
 Then you will need to import Threebox object in your code. Depending your javascript framework this might be different. 
 ```js 
+import { Threebox } from 'threebox-plugin'; 
+```  
+Depending the framework, wrapper or bundler you ar using, try with this:
+```js 
 import { Threebox } from 'threebox-plugin/dist/threebox'; 
 ```  
+
 <br/>
 
 #### Use the bundle locally

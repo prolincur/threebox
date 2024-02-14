@@ -760,7 +760,7 @@ Objects.prototype = {
 
 			//[jscastro] sets the scale of an object based fixedZoom
 			obj.setFixedZoom = function (scale) {
-				if (obj.fixedZoom != null) {
+				if (obj.fixedZoom != null && obj.fixedZoom != 0) {
 					if (!scale) scale = obj.userData.mapScale;
 					let s = zoomScale(obj.fixedZoom);
 					if (s > scale) {
@@ -775,7 +775,7 @@ Objects.prototype = {
 			//[jscastro] sets the scale of an object based in the scale and fixedZoom
 			obj.setScale = function (scale) {
 				// scale the model so that its units are interpreted as meters at the given latitude
-				if (obj.userData.units === 'meters' && !obj.fixedZoom) {
+				if (obj.userData.units != 'scene') {
 					let s = obj.unitsPerMeter;
 					obj.scale.set(s, s, s);
 				} else if (obj.fixedZoom) {
@@ -1072,7 +1072,8 @@ Objects.prototype = {
 			bbox: true,
 			tooltip: true,
 			raycasted: true,
-			clone: true
+			clone: true,
+			withCredentials: false
 		},
 
 		Object3D: {
@@ -1088,7 +1089,7 @@ Objects.prototype = {
 			coordinates: [[[]]],
 			geometryOptions: {},
 			height: 100,
-			materials: null,
+			materials: new THREE.MeshPhongMaterial({ color: 0x660000, side: THREE.DoubleSide }),
 			scale: 1,
 			rotation: 0,
 			units: 'scene',
